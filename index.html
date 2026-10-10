@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wedding</title>
+  <meta name="description" content="Our wedding — details, travel, registry and RSVP." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ctext x=%2716%27 y=%2724%27 font-size=%2724%27 text-anchor=%27middle%27 font-family=%27Georgia%27 font-style=%27italic%27 fill=%27%23b48a6e%27%3E%26amp;%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script src="config.js"></script>
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <a href="#top" class="monogram" data-bind="monogram"></a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#travel">Travel</a></li>
+      <li><a href="#registry">Registry</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#rsvp" class="nav-cta">RSVP</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <p class="eyebrow" data-bind="tagline"></p>
+      <h1 class="names">
+        <span data-bind="first"></span>
+        <span class="amp">&amp;</span>
+        <span data-bind="second"></span>
+      </h1>
+      <div class="hero-meta">
+        <span data-bind="dateLong"></span>
+        <span class="dot" aria-hidden="true"></span>
+        <span data-bind="location"></span>
+      </div>
+      <div class="countdown" id="countdown" aria-live="polite"></div>
+      <a href="#rsvp" class="btn">RSVP</a>
+    </div>
+    <a href="#story" class="scroll-cue" aria-label="Scroll down"></a>
+  </header>
+
+  <main>
+    <section id="story" class="section reveal">
+      <p class="eyebrow">Hello</p>
+      <h2 data-bind="storyHeading"></h2>
+      <div class="ornament" aria-hidden="true"></div>
+      <div class="story-text" id="story-text"></div>
+      <div class="story-photos" id="story-photos"></div>
+    </section>
+
+    <section id="schedule" class="section section-tint reveal">
+      <p class="eyebrow">The Weekend</p>
+      <h2>Schedule</h2>
+      <div class="ornament" aria-hidden="true"></div>
+      <div class="events" id="events"></div>
+    </section>
+
+    <section id="travel" class="section reveal">
+      <p class="eyebrow">Getting There</p>
+      <h2>Travel &amp; Stay</h2>
+      <div class="ornament" aria-hidden="true"></div>
+      <p class="lede" data-bind="travelIntro"></p>
+      <div class="cards" id="travel-items"></div>
+    </section>
+
+    <section id="gallery" class="gallery reveal" hidden></section>
+
+    <section id="registry" class="section section-tint reveal">
+      <p class="eyebrow">Gifts</p>
+      <h2>Registry</h2>
+      <div class="ornament" aria-hidden="true"></div>
+      <p class="lede" data-bind="registryIntro"></p>
+      <div class="registry-links" id="registry-links"></div>
+    </section>
+
+    <section id="faq" class="section reveal">
+      <p class="eyebrow">Good to Know</p>
+      <h2>Questions</h2>
+      <div class="ornament" aria-hidden="true"></div>
+      <div class="faqs" id="faqs"></div>
+    </section>
+
+    <section id="rsvp" class="section section-tint reveal">
+      <p class="eyebrow">Kindly Reply</p>
+      <h2>RSVP</h2>
+      <div class="ornament" aria-hidden="true"></div>
+      <p class="lede">Please respond by <span data-bind="rsvpDeadline"></span>.</p>
+
+      <form class="rsvp-form" id="rsvp-form" novalidate>
+        <div class="field">
+          <label for="r-name">Full name</label>
+          <input id="r-name" name="name" required autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="r-email">Email</label>
+          <input id="r-email" name="email" type="email" required autocomplete="email" />
+        </div>
+        <fieldset class="field choice">
+          <legend>Will you be joining us?</legend>
+          <label class="pill"><input type="radio" name="attending" value="yes" required /><span>Joyfully accepts</span></label>
+          <label class="pill"><input type="radio" name="attending" value="no" /><span>Regretfully declines</span></label>
+        </fieldset>
+        <div class="if-attending">
+          <div class="field">
+            <label for="r-guests">Number in your party</label>
+            <select id="r-guests" name="guests">
+              <option>1</option><option>2</option><option>3</option><option>4</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="r-meal">Dinner choice</label>
+            <select id="r-meal" name="meal"></select>
+          </div>
+          <div class="field">
+            <label for="r-diet">Dietary restrictions</label>
+            <input id="r-diet" name="dietary" placeholder="Allergies, preferences…" />
+          </div>
+          <div class="field">
+            <label for="r-song">A song that'll get you on the dance floor</label>
+            <input id="r-song" name="song" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="r-note">A note for us <span class="muted">(optional)</span></label>
+          <textarea id="r-note" name="note" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-solid">Send RSVP</button>
+        <p class="form-status" id="form-status" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="monogram big" data-bind="monogram"></div>
+    <p data-bind="dateShort"></p>
+    <p class="muted">Made with love</p>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
