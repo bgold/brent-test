@@ -12,12 +12,12 @@
     second: W.couple.second,
     tagline: W.tagline,
     location: W.location,
-    dateLong: fmt(W.date, { month: "long", day: "numeric", year: "numeric" }),
+    dateLong: W.dateDisplay || fmt(W.date, { month: "long", day: "numeric", year: "numeric" }),
     dateShort: fmt(W.date, { month: "2-digit", day: "2-digit", year: "numeric" }).replace(/\//g, " · "),
-    storyHeading: W.story.heading,
+    introEyebrow: W.intro.eyebrow,
+    introHeading: W.intro.heading,
     travelIntro: W.travel.intro,
     registryIntro: W.registry.intro,
-    rsvpDeadline: W.rsvp.deadline,
   };
   document.querySelectorAll("[data-bind]").forEach((el) => (el.textContent = binds[el.dataset.bind] ?? ""));
   document.title = `${W.couple.first} & ${W.couple.second} · ${binds.dateLong}`;
@@ -40,9 +40,17 @@
   };
   tick(); setInterval(tick, 1000);
 
-  // ── story ──
-  $("#story-text").innerHTML = W.story.paragraphs.map((p) => `<p>${esc(p)}</p>`).join("");
-  $("#story-photos").innerHTML = (W.story.photos || []).map((src) => `<img src="${esc(src)}" alt="" loading="lazy">`).join("");
+  // ── empty sections hide themselves (and their nav link) ──
+  const hide = (id) => { $("#" + id).hidden = true; $(`.nav-links a[href="#${id}"]`)?.parentElement.remove(); };
+  if (!W.intro?.paragraphs?.length) hide("story");
+  if (!W.events?.length) hide("schedule");
+  if (!W.travel?.items?.length) hide("travel");
+  if (!W.registry?.links?.length) hide("registry");
+  if (!W.faqs?.length) hide("faq");
+
+  // ── intro ──
+  $("#story-text").innerHTML = (W.intro.paragraphs || []).map((p) => `<p>${esc(p)}</p>`).join("");
+  $("#story-photos").innerHTML = (W.intro.photos || []).map((src) => `<img src="${esc(src)}" alt="" loading="lazy">`).join("");
 
   // ── events + add-to-calendar ──
   const icsDate = (d) => new Date(d).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
@@ -51,7 +59,7 @@
       action: "TEMPLATE",
       text: `${e.name} — ${W.couple.first} & ${W.couple.second}`,
       dates: `${icsDate(e.date)}/${icsDate(e.end || e.date)}`,
-      location: `${e.venue}, ${e.address}`,
+      location: [e.venue, e.address].filter(Boolean).join(", "),
       details: e.note || "",
     });
     return `https://calendar.google.com/calendar/render?${p}`;
@@ -62,27 +70,35 @@
       `UID:${icsDate(e.date)}-${e.name.replace(/\W/g, "")}@wedding`,
       `DTSTAMP:${icsDate(Date.now())}`, `DTSTART:${icsDate(e.date)}`, `DTEND:${icsDate(e.end || e.date)}`,
       `SUMMARY:${e.name} — ${W.couple.first} & ${W.couple.second}`,
-      `LOCATION:${(e.venue + ", " + e.address).replace(/,/g, "\\,")}`,
+      `LOCATION:${[e.venue, e.address].filter(Boolean).join(", ").replace(/,/g, "\\,")}`,
       `DESCRIPTION:${(e.note || "").replace(/,/g, "\\,")}`,
       "END:VEVENT", "END:VCALENDAR",
     ].join("\r\n");
     return "data:text/calendar;charset=utf-8," + encodeURIComponent(body);
   };
-  $("#events").innerHTML = W.events.map((e) => `
+  // a bare "YYYY-MM-DD" means the time isn't set yet: show the day only, at noon local so tz can't shift it
+  const dayOnly = (d) => /^\d{4}-\d{2}-\d{2}$/.test(d);
+  const tm = (d) => fmt(d, { hour: "numeric", minute: "2-digit" });
+  $("#events").innerHTML = W.events.map((e) => {
+    const timed = !dayOnly(e.date);
+    const when = timed ? e.date : `${e.date}T12:00:00Z`;
+    const map = e.mapQuery || [e.venue, e.address].filter(Boolean).join(" ");
+    return `
     <article class="event">
-      <span class="when">${fmt(e.date, { weekday: "long", month: "long", day: "numeric" })}</span>
+      <span class="when">${fmt(when, timed ? { weekday: "long", month: "long", day: "numeric" } : { timeZone: "UTC", weekday: "long", month: "long", day: "numeric" })}</span>
       <h3>${esc(e.name)}</h3>
-      <span class="time">${fmt(e.date, { hour: "numeric", minute: "2-digit" })}${e.end ? " – " + fmt(e.end, { hour: "numeric", minute: "2-digit" }) : ""}</span>
+      ${timed ? `<span class="time">${tm(e.date)}${e.end ? " – " + tm(e.end) : ""}</span>` : ""}
       <span class="venue">${esc(e.venue)}</span>
-      <address>${esc(e.address)}</address>
+      ${e.address ? `<address>${esc(e.address)}</address>` : ""}
       ${e.attire ? `<span class="attire">${esc(e.attire)}</span>` : ""}
       ${e.note ? `<p class="note">${esc(e.note)}</p>` : ""}
       <div class="actions">
-        <a class="btn btn-sm" target="_blank" rel="noopener" href="https://maps.google.com/?q=${encodeURIComponent(e.venue + " " + e.address)}">Map</a>
-        <a class="btn btn-sm" target="_blank" rel="noopener" href="${gcal(e)}">Google Cal</a>
-        <a class="btn btn-sm" download="${esc(e.name)}.ics" href="${ics(e)}">iCal</a>
+        ${e.mapQuery || e.address ? `<a class="btn btn-sm" target="_blank" rel="noopener" href="https://maps.google.com/?q=${encodeURIComponent(map)}">Map</a>` : ""}
+        ${timed ? `<a class="btn btn-sm" target="_blank" rel="noopener" href="${gcal(e)}">Google Cal</a>
+        <a class="btn btn-sm" download="${esc(e.name)}.ics" href="${ics(e)}">iCal</a>` : ""}
       </div>
-    </article>`).join("");
+    </article>`;
+  }).join("");
 
   // ── travel ──
   $("#travel-items").innerHTML = W.travel.items.map((t) => `
@@ -108,6 +124,13 @@
 
   // ── rsvp ──
   const form = $("#rsvp-form");
+  if (!W.rsvp.open) {
+    form.hidden = true;
+    $("#rsvp-lede").textContent = W.rsvp.closedNote;
+    $(".nav-cta").textContent = $(".hero .btn").textContent = "Reply";
+  } else {
+    $("#rsvp-lede").textContent = W.rsvp.deadline ? `Please respond by ${W.rsvp.deadline}.` : "";
+  }
   const status = $("#form-status");
   const extra = $(".if-attending");
   $("#r-meal").innerHTML = W.rsvp.mealOptions.map((m) => `<option>${esc(m)}</option>`).join("");
