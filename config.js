@@ -35,7 +35,7 @@ window.WEDDING = {
   events: [
     { name: "Welcome Dinner",  date: "2027-02-24T18:00:00+07:00", venue: "Venue to come", note: "Drinks as the sun goes down over the Andaman." },
     { name: "Thai Wedding",    date: "2027-02-25T10:00:00+07:00", venue: "The Tubkaak Krabi Boutique Resort", mapQuery: "The Tubkaak Krabi Boutique Resort", note: "Khan Mak procession and ceremony in the morning, dinner that evening." },
-    { name: "Western Ceremony", date: "2027-02-26T17:00:00+07:00", end: "2027-02-26T18:00:00+07:00", venue: "Banyan Tree Krabi", address: "Beach Lawn", mapQuery: "Banyan Tree Krabi" },
+    { name: "Western Ceremony", date: "2027-02-26T17:00:00+07:00", end: "2027-02-26T18:00:00+07:00", venue: "Banyan Tree Krabi", address: "Beach Lawn 4", mapQuery: "Banyan Tree Krabi" },
     { name: "Reception",       date: "2027-02-26T18:00:00+07:00", end: "2027-02-26T22:00:00+07:00", venue: "Banyan Tree Krabi", address: "Beach Lawn", mapQuery: "Banyan Tree Krabi", note: "Dinner and dancing." },
     { name: "After-Party",     date: "2027-02-26T22:00:00+07:00", end: "2027-02-27T01:00:00+07:00", venue: "Banyan Tree Krabi", address: "Naga Kitchen", mapQuery: "Banyan Tree Krabi" },
     { name: "Farewell Brunch", date: "2027-02-27T11:30:00+07:00", venue: "Venue to come" },
