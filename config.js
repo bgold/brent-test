@@ -54,7 +54,6 @@ window.WEDDING = {
     items: [
       { title: "Venues", image: "photos/venue.jpg", body: "Thai wedding at The Tubkaak Krabi Boutique Resort; Western wedding at Banyan Tree Krabi." },
       { title: "Airport", image: "photos/airport.jpg", body: "Krabi International Airport (KBV)." },
-      { title: "Accommodations", image: "photos/hotels.jpg", body: "We've reserved room blocks with three hotels at various price points, all within minutes of the event venues. More information will be shared in the formal invite." },
       { title: "Transportation", body: "Krabi Airport is approximately 45–60 minutes from the hotels. We'll provide airport transfers to the hotels, and shuttles between the hotels and events." },
     ],
   },

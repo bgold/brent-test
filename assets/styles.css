@@ -220,6 +220,45 @@ h3 { font-size: 1.7rem; font-weight: 400; }
 .card p { margin: 0 0 1rem; color: var(--ink-soft); }
 .card a.link { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 2px; color: var(--plum); }
 
+/* where to stay */
+.stay-how { list-style: none; counter-reset: s; padding: 0; margin: -1.4rem auto 4rem; max-width: 46rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.4rem; text-align: left; }
+.stay-how li { counter-increment: s; font-size: .92rem; color: var(--ink-soft); padding-top: .9rem; border-top: 1px solid var(--line); }
+.stay-how li::before { content: counter(s, decimal-leading-zero); display: block; font-family: var(--caps); color: var(--gold); font-size: .9rem; letter-spacing: .1em; margin-bottom: .3rem; }
+.hotels { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(4rem, 9vw, 7rem); text-align: left; }
+.hotel { min-width: 0; }
+.hotel-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+.hotel:nth-child(even) .hotel-img { order: 2; }
+.hotel.no-img .hotel-head { grid-template-columns: minmax(0, 1fr); max-width: 40rem; }
+.hotel-img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.hotel-tag { font-size: .66rem; letter-spacing: .26em; text-transform: uppercase; color: var(--gold); margin: 0 0 .5rem; }
+.hotel h3 { font-family: var(--caps); color: var(--plum); font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: .02em; margin-bottom: .5rem; }
+.hotel-loc { font-family: var(--serif); font-style: italic; font-size: 1.15rem; margin: 0 0 .9rem; color: var(--ink); }
+.hotel-blurb { color: var(--ink-soft); margin: 0 0 1.2rem; font-size: .95rem; }
+.hotel-notes { margin: 0 0 1.2rem; display: grid; gap: .7rem; }
+.hotel-notes div { display: grid; grid-template-columns: 7.5rem 1fr; gap: .8rem; border-top: 1px solid var(--line); padding-top: .7rem; }
+.hotel-notes dt { font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-soft); padding-top: .25rem; }
+.hotel-notes dd { margin: 0; font-family: var(--serif); font-size: 1.1rem; line-height: 1.4; }
+.hotel .links { display: flex; gap: 1.2rem; margin: 0; }
+.hotel .links a, .room-link { font-size: .64rem; letter-spacing: .22em; text-transform: uppercase; text-decoration: none; color: var(--plum); border-bottom: 1px solid color-mix(in srgb, var(--gold) 70%, transparent); padding-bottom: 1px; }
+.rooms { display: grid; grid-auto-flow: column; grid-auto-columns: 250px; justify-content: start; gap: 1.25rem; margin-top: 2rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: .6rem; scrollbar-width: thin; }
+.room { scroll-snap-align: start; background: #fcfaf5; border: 1px solid var(--line); padding: 0 0 1.1rem; display: flex; flex-direction: column; }
+.room img, .room-ph { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; margin-bottom: .9rem; }
+.room-ph { background: var(--tint) url("../photos/motif.png") center / 22px no-repeat; }
+.room > :not(img):not(.room-ph) { margin-left: 1.1rem; margin-right: 1.1rem; }
+.room h4 { font-family: var(--serif); font-weight: 400; font-size: 1.3rem; line-height: 1.2; margin-top: 0; margin-bottom: .25rem; }
+.room-meta, .room-nights { font-size: .8rem; color: var(--ink-soft); margin: 0 0 .5rem; }
+.room-price { margin: .2rem 0 .3rem; font-size: .85rem; color: var(--ink-soft); }
+.room-price strong { font-family: var(--serif); font-weight: 500; font-size: 1.45rem; color: var(--plum); }
+.room-compare { font-size: .74rem; color: var(--ink-soft); margin: 0 0 .7rem; font-style: italic; }
+.room-link { align-self: flex-start; margin-top: auto; }
+.stay-fine { font-size: .75rem; color: var(--ink-soft); margin-top: 3.5rem !important; max-width: 40rem !important; }
+@media (max-width: 760px) {
+  .hotel-head, .hotel:nth-child(even) .hotel-head { grid-template-columns: minmax(0, 1fr); }
+  .hotel:nth-child(even) .hotel-img { order: 0; }
+  .rooms { grid-auto-columns: 78%; }
+  .hotel-notes div { grid-template-columns: 6.5rem 1fr; }
+}
+
 /* gallery */
 .gallery { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(260px, 32vw); overflow-x: auto; scroll-snap-type: x mandatory; gap: 4px; scrollbar-width: none; }
 .gallery::-webkit-scrollbar { display: none; }

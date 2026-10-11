@@ -123,6 +123,55 @@
     </section>`;
   }).join("");
 
+  // ── where to stay ──
+  const S = window.STAY;
+  if (!S?.hotels?.length) hide("stay");
+  else {
+    const usd = (n) => "$" + Math.round(n).toLocaleString("en-US");
+    const thb = (n) => "฿" + Math.round(n).toLocaleString("en-US");
+    const span = (a, b) => `${fmt(a + "T12:00:00Z", { timeZone: "UTC", month: "short", day: "numeric" })}–${fmt(b + "T12:00:00Z", { timeZone: "UTC", day: "numeric" })}`;
+    const roomHtml = (r) => {
+      const price = (r.usd ?? r.thb / S.fx) * (1 + (S.fee || 0));
+      const meta = [r.size && `${r.size} m²`, r.bed, r.guests && `sleeps ${r.guests}`].filter(Boolean).map(esc).join(" · ");
+      // only show agoda when it actually makes our price look good
+      const ag = r.agoda && r.agoda.nonRefundable > price ? r.agoda : null;
+      return `
+        <div class="room">
+          ${r.image ? `<img src="${esc(r.image)}" alt="" loading="lazy">` : `<div class="room-ph" aria-hidden="true"></div>`}
+          <h4>${esc(r.name)}</h4>
+          ${meta ? `<p class="room-meta">${meta}</p>` : ""}
+          <p class="room-price"><strong>${usd(price)}</strong> / night${r.thb ? ` <span>(${thb(price * S.fx)})</span>` : ""}</p>
+          ${r.checkIn ? `<p class="room-nights">${span(r.checkIn, r.checkOut)} · ${r.count} in our block</p>` : ""}
+          ${ag ? `<p class="room-compare">On Agoda: ${usd(ag.nonRefundable)} non-refundable${ag.refundable ? ` · ${usd(ag.refundable)} flexible` : ""}</p>` : ""}
+          ${r.url ? `<a class="room-link" target="_blank" rel="noopener" href="${esc(r.url)}">Room details</a>` : ""}
+        </div>`;
+    };
+    $("#stay-intro").textContent = S.intro;
+    $("#stay-how").innerHTML = S.howItWorks.map((s) => `<li>${esc(s)}</li>`).join("");
+    $("#hotels").innerHTML = S.hotels.map((h) => `
+      <article class="hotel${h.image ? "" : " no-img"}">
+        <div class="hotel-head">
+          ${h.image ? `<img class="hotel-img" src="${esc(h.image)}" alt="${esc(h.name)}" loading="lazy">` : ""}
+          <div class="hotel-info">
+            <p class="hotel-tag">${esc(h.tag)}</p>
+            <h3>${esc(h.name)}</h3>
+            <p class="hotel-loc">${esc(h.location)}</p>
+            <p class="hotel-blurb">${esc(h.blurb)}</p>
+            <dl class="hotel-notes">
+              <div><dt>Best for</dt><dd>${esc(h.bestFor)}</dd></div>
+              <div><dt>Worth knowing</dt><dd>${esc(h.worthKnowing)}</dd></div>
+            </dl>
+            <p class="links">
+              ${h.url ? `<a target="_blank" rel="noopener" href="${esc(h.url)}">Hotel website</a>` : ""}
+              ${h.address ? `<a target="_blank" rel="noopener" href="https://maps.google.com/?q=${encodeURIComponent(h.name + " " + h.address)}">Map</a>` : ""}
+            </p>
+          </div>
+        </div>
+        <div class="rooms">${h.rooms.map(roomHtml).join("")}</div>
+      </article>`).join("");
+    $("#stay").insertAdjacentHTML("beforeend", `<p class="stay-fine">Prices are per room per night, including taxes and fees. Agoda prices for the same dates as of ${esc(S.agodaCheckedAt)}.</p>`);
+  }
+
   // ── travel ──
   $("#travel-items").innerHTML = W.travel.items.map((t) => `
     <div class="card">
