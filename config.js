@@ -41,6 +41,14 @@ window.WEDDING = {
     { name: "Farewell Brunch", date: "2027-02-27T11:30:00+07:00", venue: "Venue to come" },
   ],
 
+  // one image per day of the schedule (keyed by local date)
+  dayImages: {
+    "2027-02-24": "photos/beach.jpg",
+    "2027-02-25": "photos/tubkaak.jpg",
+    "2027-02-26": "photos/venue.jpg",
+    "2027-02-27": "photos/stamp.jpg",
+  },
+
   travel: {
     intro: "Wednesday, February 24 through Saturday, February 27, 2027.",
     items: [

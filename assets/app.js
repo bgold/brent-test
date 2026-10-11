@@ -81,25 +81,46 @@
   // a bare "YYYY-MM-DD" means the time isn't set yet: show the day only, at noon local so tz can't shift it
   const dayOnly = (d) => /^\d{4}-\d{2}-\d{2}$/.test(d);
   const tm = (d) => fmt(d, { hour: "numeric", minute: "2-digit" });
-  $("#events").innerHTML = W.events.map((e) => {
+  const eventHtml = (e) => {
     const timed = !dayOnly(e.date);
-    const when = timed ? e.date : `${e.date}T12:00:00Z`;
     const map = e.mapQuery || [e.venue, e.address].filter(Boolean).join(" ");
+    const links = [
+      e.mapQuery || e.address ? `<a target="_blank" rel="noopener" href="https://maps.google.com/?q=${encodeURIComponent(map)}">Map</a>` : "",
+      timed ? `<a target="_blank" rel="noopener" href="${gcal(e)}">Google Cal</a>` : "",
+      timed ? `<a download="${esc(e.name)}.ics" href="${ics(e)}">iCal</a>` : "",
+    ].filter(Boolean);
     return `
-    <article class="event">
-      <span class="when">${fmt(when, timed ? { weekday: "long", month: "long", day: "numeric" } : { timeZone: "UTC", weekday: "long", month: "long", day: "numeric" })}</span>
-      <h3>${esc(e.name)}</h3>
-      ${timed ? `<span class="time">${tm(e.date)}${e.end ? " – " + tm(e.end) : ""}</span>` : ""}
-      <span class="venue">${esc(e.venue)}</span>
-      ${e.address ? `<address>${esc(e.address)}</address>` : ""}
-      ${e.attire ? `<span class="attire">${esc(e.attire)}</span>` : ""}
-      ${e.note ? `<p class="note">${esc(e.note)}</p>` : ""}
-      <div class="actions">
-        ${e.mapQuery || e.address ? `<a class="btn btn-sm" target="_blank" rel="noopener" href="https://maps.google.com/?q=${encodeURIComponent(map)}">Map</a>` : ""}
-        ${timed ? `<a class="btn btn-sm" target="_blank" rel="noopener" href="${gcal(e)}">Google Cal</a>
-        <a class="btn btn-sm" download="${esc(e.name)}.ics" href="${ics(e)}">iCal</a>` : ""}
+      <article class="event">
+        <div class="event-time">${timed ? tm(e.date) : ""}</div>
+        <div class="event-main">
+          <h4>${esc(e.name)}</h4>
+          <p class="venue">${[e.venue, e.address].filter(Boolean).map(esc).join(" · ")}</p>
+          ${e.note ? `<p class="note">${esc(e.note)}</p>` : ""}
+          ${e.attire ? `<p class="attire">${esc(e.attire)}</p>` : ""}
+          ${links.length ? `<p class="links">${links.join("")}</p>` : ""}
+        </div>
+      </article>`;
+  };
+  // group by local calendar day of the start time (en-CA formats as YYYY-MM-DD)
+  const dayKey = (e) => dayOnly(e.date) ? e.date : new Intl.DateTimeFormat("en-CA", { timeZone: tz }).format(new Date(e.date));
+  const days = [];
+  W.events.forEach((e) => {
+    const k = dayKey(e);
+    const d = days.find((x) => x.k === k) || days[days.push({ k, events: [] }) - 1];
+    d.events.push(e);
+  });
+  const dayFmt = (k, o) => fmt(`${k}T12:00:00Z`, { timeZone: "UTC", ...o });
+  $("#events").innerHTML = days.map((d, i) => {
+    const img = W.dayImages?.[d.k];
+    return `
+    <section class="day${i % 2 ? " flip" : ""}${img ? "" : " no-img"}">
+      ${img ? `<div class="day-img"><img src="${esc(img)}" alt="" loading="lazy"></div>` : ""}
+      <div class="day-body">
+        <p class="day-date">${dayFmt(d.k, { month: "long", day: "numeric" })}</p>
+        <h3 class="day-name">${dayFmt(d.k, { weekday: "long" })}</h3>
+        ${d.events.map(eventHtml).join("")}
       </div>
-    </article>`;
+    </section>`;
   }).join("");
 
   // ── travel ──
