@@ -103,6 +103,7 @@
   // ── travel ──
   $("#travel-items").innerHTML = W.travel.items.map((t) => `
     <div class="card">
+      ${t.image ? `<img src="${esc(t.image)}" alt="" loading="lazy">` : ""}
       <h3>${esc(t.title)}</h3>
       <p>${esc(t.body)}</p>
       ${t.link ? `<a class="link" target="_blank" rel="noopener" href="${esc(t.link)}">${esc(t.linkLabel || "Learn more")}</a>` : ""}

@@ -41,9 +41,9 @@ window.WEDDING = {
   travel: {
     intro: "Wednesday, February 24 through Saturday, February 27, 2027.",
     items: [
-      { title: "Venue", body: "Banyan Tree Krabi.", link: "https://maps.google.com/?q=Banyan+Tree+Krabi", linkLabel: "Map" },
-      { title: "Airport", body: "Krabi International Airport (KBV)." },
-      { title: "Accommodations", body: "We've reserved room blocks with three hotels at various price points, all within minutes of the event venues. More information will be shared in the formal invite." },
+      { title: "Venue", image: "photos/venue.jpg", body: "Banyan Tree Krabi.", link: "https://maps.google.com/?q=Banyan+Tree+Krabi", linkLabel: "Map" },
+      { title: "Airport", image: "photos/airport.jpg", body: "Krabi International Airport (KBV)." },
+      { title: "Accommodations", image: "photos/hotels.jpg", body: "We've reserved room blocks with three hotels at various price points, all within minutes of the event venues. More information will be shared in the formal invite." },
       { title: "Transportation", body: "Krabi Airport is approximately 45–60 minutes from the hotels. We'll provide airport transfers to the hotels, and shuttles between the hotels and events." },
     ],
   },

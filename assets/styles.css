@@ -1,15 +1,15 @@
 :root {
   /* pulled from the paperless post save-the-date */
-  --ivory: #f7f3ea;
-  --paper: #fffdf7;
-  --tint: #e3ece6;
-  --celadon: #9cc0b2;
-  --celadon-deep: #7fa898;
+  --ivory: #f7f2e9;
+  --paper: #f3ece1;
+  --tint: #e2eae4;
+  --celadon: #9bb4a5;
+  --celadon-deep: #7f9d8c;
   --ink: #2e2a2c;
   --ink-soft: #66605f;
   --line: #d9d2c2;
-  --plum: #7a2150;
-  --gold: #b8995a;
+  --plum: #75143f;
+  --gold: #b99d58;
   --clay: var(--plum);
   --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
   --caps: "Marcellus SC", "Cormorant Garamond", Georgia, serif;
@@ -107,12 +107,8 @@ h3 { font-size: 1.7rem; font-weight: 400; }
   text-align: center; padding: 6rem 1.25rem 4rem; overflow: hidden;
 }
 .hero-bg {
-  position: absolute; inset: -40px; z-index: -1;
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='160' viewBox='0 0 120 160'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.28' stroke-width='1.2'%3E%3Cpath d='M60 10c22 26 34 48 34 70S78 128 60 150C42 128 26 102 26 80S38 36 60 10z'/%3E%3Cpath d='M60 40c12 14 18 28 18 40s-6 26-18 40c-12-14-18-28-18-40s6-26 18-40z'/%3E%3Cpath d='M60 64v32M50 80h20'/%3E%3C/g%3E%3Cg fill='%23f4e7c4' fill-opacity='.45'%3E%3Ccircle cx='0' cy='0' r='3'/%3E%3Ccircle cx='120' cy='0' r='3'/%3E%3Ccircle cx='0' cy='160' r='3'/%3E%3Ccircle cx='120' cy='160' r='3'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 120px 160px,
-    radial-gradient(70% 60% at 50% 40%, var(--celadon) 0%, var(--celadon-deep) 100%);
-  background-size: 120px 160px, cover; background-position: center;
-  animation: drift 40s linear infinite;
+  position: absolute; inset: 0; z-index: -1;
+  background: var(--celadon) url("../photos/backdrop.jpg") center / cover;
 }
 .hero.has-photo { color: #fff; }
 .hero.has-photo .hero-bg { animation: kenburns 30s ease-out forwards; }
@@ -124,7 +120,7 @@ h3 { font-size: 1.7rem; font-weight: 400; }
 .hero.has-photo .btn { border-color: #fff; color: #fff; }
 .hero.has-photo .btn:hover { background: #fff; color: var(--ink); }
 .hero-inner {
-  width: min(40rem, 100%); background: var(--paper);
+  width: min(40rem, 100%); background: var(--paper) url("../photos/paper.jpg") center / cover;
   padding: clamp(2.6rem, 7vw, 4.5rem) clamp(1.2rem, 5vw, 3.5rem) clamp(2.4rem, 6vw, 3.5rem);
   box-shadow: 0 30px 60px -30px rgba(30, 60, 50, .55), 0 2px 6px rgba(30, 60, 50, .12);
   outline: 1px solid color-mix(in srgb, var(--gold) 55%, transparent); outline-offset: -12px;
@@ -138,9 +134,10 @@ h3 { font-size: 1.7rem; font-weight: 400; }
 .amp { font-size: .7em; color: var(--plum); }
 .script { font-family: var(--script); color: var(--plum); font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.2; margin: 1.2rem 0 .4rem; transform: rotate(-4deg); }
 .hero-date, .hero-place { font-family: var(--caps); color: var(--plum); font-size: clamp(1.05rem, 2.6vw, 1.45rem); letter-spacing: .08em; margin: .2rem 0; }
+.hero-art { width: 100%; margin: 1.6rem 0 0; aspect-ratio: 512 / 331; object-fit: cover; outline: 1px solid var(--gold); outline-offset: 3px; }
 .motif {
-  width: 26px; height: 40px; margin: 1.4rem auto;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 40'%3E%3Cg fill='%23b8995a'%3E%3Cpath d='M13 0c7 9 11 17 11 24 0 8-5 13-11 16C7 37 2 32 2 24 2 17 6 9 13 0z' opacity='.35'/%3E%3Cpath d='M13 8c4 6 6 11 6 16s-3 9-6 11c-3-2-6-6-6-11s2-10 6-16z'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+  width: 30px; height: 46px; margin: 1.4rem auto;
+  background: url("../photos/motif.png") center / contain no-repeat;
 }
 .hero.has-photo .amp { color: inherit; opacity: .85; }
 .hero-meta {
@@ -157,7 +154,6 @@ h3 { font-size: 1.7rem; font-weight: 400; }
   transform-origin: top; animation: cue 2.4s var(--ease) infinite;
 }
 
-@keyframes drift { to { transform: translate(40px, 40px); } }
 @keyframes kenburns { from { transform: scale(1.08); } to { transform: scale(1); } }
 @keyframes cue { 0% { transform: translateX(-50%) scaleY(0); } 50% { transform: translateX(-50%) scaleY(1); } 100% { transform: translateX(-50%) scaleY(0); transform-origin: bottom; } }
 
@@ -178,9 +174,9 @@ h3 { font-size: 1.7rem; font-weight: 400; }
 .section-tint { background: var(--tint); }
 .section > .lede { max-width: 36rem; }
 .ornament {
-  width: 64px; height: 18px; margin: 1.6rem auto 2.8rem;
+  width: 88px; height: 26px; margin: 1.6rem auto 2.8rem;
   background:
-    radial-gradient(circle, var(--gold) 2.5px, transparent 3px) center / 18px 18px no-repeat,
+    url("../photos/motif.png") center / auto 26px no-repeat,
     linear-gradient(var(--line), var(--line)) left center / 22px 1px no-repeat,
     linear-gradient(var(--line), var(--line)) right center / 22px 1px no-repeat;
 }
@@ -196,7 +192,7 @@ h3 { font-size: 1.7rem; font-weight: 400; }
 /* events */
 .events { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; }
 .event {
-  background: var(--paper); padding: 2.6rem 2rem 2.2rem; border: 1px solid var(--line);
+  background: #fcfaf5; padding: 2.6rem 2rem 2.2rem; border: 1px solid var(--line);
   display: flex; flex-direction: column; align-items: center; gap: .3rem;
   transition: transform .5s var(--ease), box-shadow .5s var(--ease);
 }
@@ -213,6 +209,7 @@ h3 { font-size: 1.7rem; font-weight: 400; }
 
 /* travel */
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2.5rem; text-align: left; }
+.card img { aspect-ratio: 16 / 9; object-fit: cover; width: 100%; margin-bottom: 1.2rem; outline: 1px solid color-mix(in srgb, var(--gold) 60%, transparent); outline-offset: 4px; }
 .card h3 { font-size: 1.45rem; margin-bottom: .6rem; padding-bottom: .6rem; border-bottom: 1px solid var(--line); }
 .card p { margin: 0 0 1rem; color: var(--ink-soft); }
 .card a.link { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 2px; color: var(--plum); }
