@@ -11,7 +11,7 @@ window.WEDDING = {
   },
 
   // countdown target. ISO w/ offset — Krabi is UTC+7 year-round
-  date: "2027-02-25T00:00:00+07:00",
+  date: "2027-02-25T10:00:00+07:00",
   timezone: "Asia/Bangkok",
   dateDisplay: "February 25 & 26, 2027",
   location: "Krabi, Thailand",
@@ -30,18 +30,21 @@ window.WEDDING = {
     photos: [], // up to 3 look best, e.g. "photos/us-1.jpg"
   },
 
-  // `date` alone = day only; add `time`/`end` (ISO) once known to unlock calendar buttons
+  // `date` as "YYYY-MM-DD" = day only (no time shown, no calendar buttons).
+  // full ISO w/ +07:00 = timed; `end` optional (calendar assumes 2h without it)
   events: [
-    { name: "Welcome Dinner",  date: "2027-02-24", venue: "Krabi", note: "Details to come." },
-    { name: "Thai Wedding",    date: "2027-02-25", venue: "Banyan Tree Krabi", mapQuery: "Banyan Tree Krabi", note: "Details to come." },
-    { name: "Western Wedding", date: "2027-02-26", venue: "Banyan Tree Krabi", mapQuery: "Banyan Tree Krabi", note: "Details to come." },
-    { name: "Farewell Brunch", date: "2027-02-27", venue: "Krabi", note: "Details to come." },
+    { name: "Welcome Dinner",  date: "2027-02-24T18:00:00+07:00", venue: "Venue to come", note: "Drinks as the sun goes down over the Andaman." },
+    { name: "Thai Wedding",    date: "2027-02-25T10:00:00+07:00", venue: "The Tubkaak Krabi Boutique Resort", mapQuery: "The Tubkaak Krabi Boutique Resort", note: "Khan Mak procession and ceremony in the morning, dinner that evening." },
+    { name: "Western Ceremony", date: "2027-02-26T17:00:00+07:00", end: "2027-02-26T18:00:00+07:00", venue: "Banyan Tree Krabi", address: "Beach Lawn", mapQuery: "Banyan Tree Krabi" },
+    { name: "Reception",       date: "2027-02-26T18:00:00+07:00", end: "2027-02-26T22:00:00+07:00", venue: "Banyan Tree Krabi", address: "Beach Lawn", mapQuery: "Banyan Tree Krabi", note: "Dinner and dancing." },
+    { name: "After-Party",     date: "2027-02-26T22:00:00+07:00", end: "2027-02-27T01:00:00+07:00", venue: "Banyan Tree Krabi", address: "Naga Kitchen", mapQuery: "Banyan Tree Krabi" },
+    { name: "Farewell Brunch", date: "2027-02-27T11:30:00+07:00", venue: "Venue to come" },
   ],
 
   travel: {
     intro: "Wednesday, February 24 through Saturday, February 27, 2027.",
     items: [
-      { title: "Venue", image: "photos/venue.jpg", body: "Banyan Tree Krabi.", link: "https://maps.google.com/?q=Banyan+Tree+Krabi", linkLabel: "Map" },
+      { title: "Venues", image: "photos/venue.jpg", body: "Thai wedding at The Tubkaak Krabi Boutique Resort; Western wedding at Banyan Tree Krabi." },
       { title: "Airport", image: "photos/airport.jpg", body: "Krabi International Airport (KBV)." },
       { title: "Accommodations", image: "photos/hotels.jpg", body: "We've reserved room blocks with three hotels at various price points, all within minutes of the event venues. More information will be shared in the formal invite." },
       { title: "Transportation", body: "Krabi Airport is approximately 45–60 minutes from the hotels. We'll provide airport transfers to the hotels, and shuttles between the hotels and events." },

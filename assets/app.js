@@ -54,11 +54,13 @@
 
   // ── events + add-to-calendar ──
   const icsDate = (d) => new Date(d).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  // no end time → assume 2h so calendars don't get a zero-length block
+  const endOf = (e) => e.end || new Date(new Date(e.date).getTime() + 2 * 36e5).toISOString();
   const gcal = (e) => {
     const p = new URLSearchParams({
       action: "TEMPLATE",
       text: `${e.name} — ${W.couple.first} & ${W.couple.second}`,
-      dates: `${icsDate(e.date)}/${icsDate(e.end || e.date)}`,
+      dates: `${icsDate(e.date)}/${icsDate(endOf(e))}`,
       location: [e.venue, e.address].filter(Boolean).join(", "),
       details: e.note || "",
     });
@@ -68,7 +70,7 @@
     const body = [
       "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//wedding//EN", "BEGIN:VEVENT",
       `UID:${icsDate(e.date)}-${e.name.replace(/\W/g, "")}@wedding`,
-      `DTSTAMP:${icsDate(Date.now())}`, `DTSTART:${icsDate(e.date)}`, `DTEND:${icsDate(e.end || e.date)}`,
+      `DTSTAMP:${icsDate(Date.now())}`, `DTSTART:${icsDate(e.date)}`, `DTEND:${icsDate(endOf(e))}`,
       `SUMMARY:${e.name} — ${W.couple.first} & ${W.couple.second}`,
       `LOCATION:${[e.venue, e.address].filter(Boolean).join(", ").replace(/,/g, "\\,")}`,
       `DESCRIPTION:${(e.note || "").replace(/,/g, "\\,")}`,
