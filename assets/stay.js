@@ -1,7 +1,7 @@
 // where-to-stay data. official copy/photos from each hotel's site; prices = what we paid (at cost).
 // thb prices convert at STAY.fx; usd prices were paid in usd. agoda = public price for the same dates, for comparison.
 window.STAY = {
-  fx: 33, // THB per USD, locked. TODO: set to the rate we actually paid at
+  fx: 33, // THB per USD — the rate we paid at, locked
   fee: 0.03, // folded into every shown price to cover card processing; not itemized
   agodaCheckedAt: "Oct 11, 2026",
   intro: "We've reserved rooms at five hotels around Tubkaek Beach, all at our group rate. Banyan Tree and Tubkaak are the venues, a short walk apart; Tup Kaek Sunset is a stroll from both; Varana and Elements are a 5–10 minute drive, with shuttles to every event.",
@@ -18,12 +18,34 @@ window.STAY = {
     "location": "Western ceremony, reception and after-party are here. A short walk to Tubkaak.",
     "blurb": "An all-villa resort on quiet Tubkaek Beach, every villa with its own pool. Michelin Guide Two Keys, a Banyan Tree spa, and the wedding night happens right outside your door.",
     "bestFor": "Making a full holiday of it — and never needing a shuttle.",
-    "worthKnowing": "Our most indulgent option, and only a handful of villas.",
+    "worthKnowing": "Our most indulgent option — ten villas, eight right on the beach.",
     "image": "photos/hotels/banyan-tree/hero.jpg",
     "url": "https://www.banyantree.com/thailand/krabi",
     "bookingUrl": "https://be.synxis.com/?hotel=30835&chain=17604&theme=BTSBE&config=BTSBE&locale=en-US",
     "address": "279 Moo 3, Tambon Nongtalay, Amphoe Muang, Krabi 81180, Thailand",
     "rooms": [
+      {
+        "name": "Beachfront Pool Villa",
+        "image": "photos/hotels/banyan-tree/beachfront-pool-villa.jpg",
+        "size": 204,
+        "bed": "King",
+        "guests": 2,
+        "features": [
+          "Directly on Tubkaek Beach, with sea view",
+          "Pool wrapping three sides, plus a private jet pool",
+          "Large living and dining room",
+          "Private terrace and garden with daybed"
+        ],
+        "url": "https://www.banyantree.com/thailand/krabi/accommodation/beachfront-pool-villa",
+        "count": 8,
+        "checkIn": "2027-02-24",
+        "checkOut": "2027-02-27",
+        "thb": 46000,
+        "agoda": {
+          "nonRefundable": 1614,
+          "when": "week before & after"
+        }
+      },
       {
         "name": "Deluxe Garden Pool Villa",
         "image": "photos/hotels/banyan-tree/deluxe-garden-pool-villa.jpg",
@@ -37,10 +59,14 @@ window.STAY = {
           "Outdoor cabana in private landscaped garden"
         ],
         "url": "https://www.banyantree.com/thailand/krabi/accommodation/deluxe-garden-pool-villa",
-        "count": 9,
+        "count": 2,
         "checkIn": "2027-02-24",
         "checkOut": "2027-02-27",
-        "thb": 46000
+        "thb": 46000,
+        "agoda": {
+          "nonRefundable": 1529,
+          "when": "week before & after"
+        }
       }
     ]
   },
@@ -71,7 +97,12 @@ window.STAY = {
         "count": 3,
         "checkIn": "2027-02-23",
         "checkOut": "2027-02-27",
-        "thb": 13500
+        "thb": 13500,
+        "agoda": {
+          "nonRefundable": 569,
+          "refundable": 755,
+          "when": "week before & after"
+        }
       },
       {
         "name": "Deluxe Room",
@@ -86,7 +117,12 @@ window.STAY = {
         "count": 3,
         "checkIn": "2027-02-23",
         "checkOut": "2027-02-27",
-        "thb": 15900
+        "thb": 15900,
+        "agoda": {
+          "nonRefundable": 652,
+          "refundable": 865,
+          "when": "week before & after"
+        }
       },
       {
         "name": "Premier Pool Villa",
@@ -102,7 +138,12 @@ window.STAY = {
         "count": 2,
         "checkIn": "2027-02-23",
         "checkOut": "2027-02-27",
-        "thb": 23600
+        "thb": 23600,
+        "agoda": {
+          "nonRefundable": 1046,
+          "refundable": 1387,
+          "when": "week before & after"
+        }
       },
       {
         "name": "Ocean View Pool Villa",
@@ -169,7 +210,8 @@ window.STAY = {
         "thb": 6679.2,
         "agoda": {
           "nonRefundable": 416,
-          "refundable": 457
+          "refundable": 457,
+          "when": "same dates"
         }
       },
       {
@@ -264,7 +306,8 @@ window.STAY = {
         "thb": 8500,
         "agoda": {
           "nonRefundable": 467,
-          "refundable": 671
+          "refundable": 671,
+          "when": "same dates"
         }
       },
       {
@@ -286,7 +329,8 @@ window.STAY = {
         "thb": 9000,
         "agoda": {
           "nonRefundable": 496,
-          "refundable": 713
+          "refundable": 713,
+          "when": "same dates"
         }
       }
     ]
@@ -308,7 +352,8 @@ window.STAY = {
         "usd": 112.0,
         "agoda": {
           "nonRefundable": 148,
-          "refundable": null
+          "refundable": null,
+          "when": "same dates"
         }
       },
       {
@@ -319,7 +364,8 @@ window.STAY = {
         "usd": 128.99,
         "agoda": {
           "nonRefundable": 153,
-          "refundable": null
+          "refundable": null,
+          "when": "same dates"
         }
       }
     ]

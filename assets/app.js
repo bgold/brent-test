@@ -142,7 +142,7 @@
           ${meta ? `<p class="room-meta">${meta}</p>` : ""}
           <p class="room-price"><strong>${usd(price)}</strong> / night${r.thb ? ` <span>(${thb(price * S.fx)})</span>` : ""}</p>
           ${r.checkIn ? `<p class="room-nights">${span(r.checkIn, r.checkOut)} · ${r.count} in our block</p>` : ""}
-          ${ag ? `<p class="room-compare">On Agoda: ${usd(ag.nonRefundable)} non-refundable${ag.refundable ? ` · ${usd(ag.refundable)} flexible` : ""}</p>` : ""}
+          ${ag ? `<p class="room-compare">On Agoda${ag.when && ag.when !== "same dates" ? ` (${esc(ag.when)})` : ""}: ${usd(ag.nonRefundable)}${ag.refundable ? ` non-refundable · ${usd(ag.refundable)} flexible` : ""}</p>` : ""}
           ${r.url ? `<a class="room-link" target="_blank" rel="noopener" href="${esc(r.url)}">Room details</a>` : ""}
         </div>`;
     };
@@ -169,7 +169,7 @@
         </div>
         <div class="rooms">${h.rooms.map(roomHtml).join("")}</div>
       </article>`).join("");
-    $("#stay").insertAdjacentHTML("beforeend", `<p class="stay-fine">Prices are per room per night, including taxes and fees. Agoda prices for the same dates as of ${esc(S.agodaCheckedAt)}.</p>`);
+    $("#stay").insertAdjacentHTML("beforeend", `<p class="stay-fine">Prices are per room per night, including taxes and fees. Agoda prices for the same dates, or the weeks before and after where our rooms are the only ones left, as of ${esc(S.agodaCheckedAt)}.</p>`);
   }
 
   // ── travel ──
